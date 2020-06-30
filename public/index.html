@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="images/logocovid-19nonbg.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> 
+  <script type="text/javascript" src="test.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
+  <title>COVID-19 TRACKING</title>
+</head>
+
+<body>
+  <div class="conntainer"> 
+    <div class="row row-design">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card">
+          <div class="card-body">
+            <h2>Dashboard (COVID-19 Thailand)</h2>
+            โรคติดเชื้อไวรัสโคโรนา 2019
+            <font color="#151515" size="2px" style="float: right;"><i class="far fa-calendar-check"></i> อัปเดตล่าสุด <script>document.write(UpdateDate);</script></font>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-design">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-padding">
+        <div class="card bg-c-pink">
+          <div class="card-body">
+            <h3 class="card-title">
+              <h1><i class="fas fa-head-side-mask" style="float:left;color:#ffffff;"></i></h1><br><br>
+              <h3><font color="#ffffff">ผู้ติดเชื้อ </font><font color="#ffffff"><script>document.write(Confirmed);</script></font> <font color="#ffffff">คน</font></h3>          
+              <center><font color="#ffffff"size="2px"><i class="fas fa-arrow-circle-up"></i> </h3>(เพิ่ม <script>document.write(NewConfirmed);</script> คน)</font></center><br>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-padding">
+        <div class="card bg-c-yellow">
+          <div class="card-body ">
+            <h3 class="card-title">
+              <h1><i class="fas fa-hospital-user" style="float:left;color:#ffffff;"></i></h1><br><br>
+              <h3><font color="#ffffff">กำลังรักษา</font><font color="#ffffff"> <script>document.write(Hospitalized);</script></font><font color="#ffffff"> คน</font></h3><br><br>
+            </h3>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-padding">
+        <div class="card bg-c-green">
+          <div class="card-body ">
+            <h3 class="card-title">
+              <h1><i class="fas fa-home" style="float:left;color:#ffffff;"></i></h1><br><br>
+              <h3><font color="#ffffff">หายแล้ว </font><font color="#ffffff"><script>document.write(Recovered);</script></font> <font color="#ffffff">คน</font></h3><br><br>
+            </h3>
+          </div>
+        </div>    
+      </div>
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-padding">
+        <div class="card bg-c-red">
+          <div class="card-body ">
+            <h3 class="card-title">            
+              <h1><i class="fas fa-book-dead"style="float:left;color:#ffffff;"></i></h1><br><br>
+              <h3><font color="#ffffff">เสียชีวิต </font><font color="#ffffff"><script>document.write(Deaths);</script></font> <font color="#ffffff">คน</font></h3>
+            </h3>
+              <center><font color="#ffffff" size="2px"><i class="fas fa-arrow-circle-up"></i> (เพิ่ม <script>document.write(NewDeaths);</script> คน)</font></center><br>
+          </div>
+        </div>    
+      </div>
+    </div>
+    <div class="row row-design">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-padding">
+        <div class="card bg-Basic">
+          <div class="card-header"><h5><font color="#151515">กราฟแสดงผู้ป่วยสะสมในประเทศไทย (เริ่มตั้งแต่วันที่ 01/01/2020)</font></h5></div>
+            <div class="card-body">
+              <div id="chart-timeline"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row row-design">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-padding">
+        <div class="card bg-Basic">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <center><b>ผู้ติดเชื้อ</b></center>
+                  <div id="chart-confirmed"></div>
+                  <center><font color="#000000" size="2px"><i class="fas fa-minus" style="color:#ee0c74;"></i> <script>document.write(Confirmed);</script> คน</font></center>
+                  <br>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <center><b>กำลังรักษา</b></center>
+                  <div id="chart-hospitalized"></div>
+                  <center><font color="#000000" size="2px"><i class="fas fa-minus" style="color:#ff6901;"></i> <script>document.write(Hospitalized);</script> คน</font></center>
+                  <br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <center><b>หายแล้ว</b></center>
+                  <div id="chart-recovered"></div>
+                  <center><font color="#000000" size="2px"><i class="fas fa-minus" style="color:#dbe350;"></i> <script>document.write(Recovered);</script> คน</font></center>
+                  <br>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <center><b>เสียชีวิต</b></center>
+                  <div id="chart-deaths"></div>
+                  <center><font color="#000000" size="2px"><i class="fas fa-minus" style="color:#38ee7d;"></i> <script>document.write(Deaths);</script> คน</font></center>
+                  <br>
+                </div>
+              </div>
+            </div>
+        </div><br>
+        <div class="card bg-Basic">
+          <div class="card-body">
+            <center><b>ผู้ติดเชื้อแยกตามเพศ</b></center>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2"></div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
+                  <div id="chart-gender"></div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2"></div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-padding">
+        <div class="card bg-Basic">
+          <div class="card-body">  
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <center><b>10 อันดับจังหวัดที่มีผู้ติดเชื้อมากที่สุดในไทย</b></center>
+              <div id="chart-province"></div>
+              <br>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <center><b>10 อันดับสัญชาติที่ติดเชื้อมากที่สุดในไทย</b></center>
+              <div id="chart-nation"></div>
+              <br>
+            </div>
+          </div>
+        </div><br>
+        <div class="card bg-Basic">
+          <div class="card-body">  
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <center><b>กราฟแสดงผู้ป่วยใหม่และรักษาหายใหม่ในแต่ละวัน</b></center>
+              <div id="chart-newconfirmed"></div>
+              <center>
+                <font color="#000000" size="2px"><i class="fas fa-minus" style="color:#1ab7ea;"></i> ผู้ป่วยใหม่ <script>document.write(NewConfirmed);</script> คน</font>&nbsp;&nbsp;
+                <font color="#000000" size="2px"><i class="fas fa-minus" style="color:#0077B5;"></i> รักษาหายใหม่ <script>document.write(NewRecovered);</script> คน</font>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+ var options = {
+          series: [{
+          name: 'ผู้ติดเชื้อ',
+          data: total_confirmed
+        }, {
+          name: 'กำลังรักษา',
+          data: total_hospitalized
+        },{
+          name: 'หายแล้ว',
+          data: total_recovered
+        },{
+          name: 'เสียชีวิต',
+          data:  total_deaths
+        }],
+          chart: {
+          height: 450,
+          type: 'area'
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        colors: ['#ee0c74', '#ff6901', '#dbe350', '#38ee7d'],
+        xaxis: {
+          type: 'datetime',
+          categories: total_date,
+          labels: {
+                style: {
+                colors: '#151515',
+                fontSize: '12px',
+                fontFamily: 'Kanit, sans-serif',
+                  }
+                }
+              },
+        legend: {
+                    position: 'bottom',
+                    offsetY: 8,
+                    fontSize: '15px',
+                    fontFamily: 'Kanit, sans-serif',
+                    labels: {
+                          colors: '#151515',
+                          // useSeriesColors: false
+                            },
+                },
+        yaxis: {
+          labels: {
+                style: {
+                colors: '#151515',
+                fontSize: '12px',
+                fontFamily: 'Kanit, sans-serif',
+                  }
+        }
+        },
+        tooltip: {
+          x: {
+            format: 'dd/MM/yy'
+          },
+          y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          } 
+        },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-timeline"), options);
+        chart.render();
+</script>
+
+<script>
+  var options = {
+           series: [{
+           name: 'ผู้ติดเชื้อ',
+           data: total_confirmed
+         },],
+           chart: {
+           height: 250,
+           type: 'area'
+         },
+        //  title: {
+        //   text: 'ผู้ติดเชื้อ',
+        //   align: 'center',
+        //   offsetY: -10,
+        //   style: {
+        //          colors: '#000000',
+        //          fontSize: '15px',
+        //          fontFamily: 'Kanit, sans-serif',
+        //            }
+        // },
+         dataLabels: {
+           enabled: false
+         },
+         stroke: {
+           curve: 'smooth'
+         },
+         colors: ['#ee0c74'],
+         xaxis: {
+           type: 'datetime',
+           categories: total_date,
+           labels: {
+                 style: {
+                 colors: '#0000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                 }
+               },
+         legend: {
+                     position: 'bottom',
+                     offsetY: 8,
+                     fontSize:'10px',
+                     fontFamily: 'Kanit, sans-serif',
+                     labels: {
+                           colors: '#000000',
+                           // useSeriesColors: false
+                             },
+                 },
+         yaxis: {
+           labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+         }
+         },
+         tooltip: {
+           x: {
+             format: 'dd/MM/yy'
+           },
+           y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          } 
+         },
+         };
+ 
+         var chart = new ApexCharts(document.querySelector("#chart-confirmed"), options);
+         chart.render();
+</script>
+
+<script>
+  var options = {
+           series: [{
+           name: 'กำลังรักษา',
+           data: total_hospitalized
+         },],
+           chart: {
+           height: 250,
+           type: 'area'
+         },
+        //  title: {
+        //   text: 'กำลังรักษา',
+        //   align: 'center',
+        //   offsetY: 20,
+        //   style: {
+        //          colors: '#000000',
+        //          fontSize: '15px',
+        //          fontFamily: 'Kanit, sans-serif',
+        //            }
+        // },
+         dataLabels: {
+           enabled: false
+         },
+         stroke: {
+           curve: 'smooth'
+         },
+         colors: ['#ff6901'],
+         xaxis: {
+           type: 'datetime',
+           categories: total_date,
+           labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                 }
+               },
+         legend: {
+                     position: 'bottom',
+                     offsetY: 8,
+                     fontSize: '10px',
+                     fontFamily: 'Kanit, sans-serif',
+                     labels: {
+                           colors: '#000000',
+                           // useSeriesColors: false
+                             },
+                 },
+         yaxis: {
+           labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+         }
+         },
+         tooltip: {
+           x: {
+             format: 'dd/MM/yy'
+           },
+           y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          } 
+         },
+         };
+ 
+         var chart = new ApexCharts(document.querySelector("#chart-hospitalized"), options);
+         chart.render();
+</script>
+
+<script>
+  var options = {
+           series: [{
+           name: 'หายแล้ว',
+           data: total_recovered
+         },],
+           chart: {
+           height: 250,
+           type: 'area'
+         },
+        //  title: {
+        //   text: 'หายแล้ว',
+        //   align: 'center',
+        //   offsetY: 20,
+        //   style: {
+        //          colors: '#000000',
+        //          fontSize: '15px',
+        //          fontFamily: 'Kanit, sans-serif',
+        //            }
+        // },
+         dataLabels: {
+           enabled: false
+         },
+         stroke: {
+           curve: 'smooth'
+         },
+         colors: ['#dbe350'],
+         xaxis: {
+           type: 'datetime',
+           categories: total_date,
+           labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                 }
+               },
+         legend: {
+                     position: 'bottom',
+                     offsetY: 8,
+                     fontSize: '10px',
+                     fontFamily: 'Kanit, sans-serif',
+                     labels: {
+                           colors: '#000000',
+                           // useSeriesColors: false
+                             },
+                 },
+         yaxis: {
+           labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+         }
+         },
+         tooltip: {
+           x: {
+             format: 'dd/MM/yy'
+           },
+           y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          } 
+         },
+         };
+ 
+         var chart = new ApexCharts(document.querySelector("#chart-recovered"), options);
+         chart.render();
+</script>
+
+<script>
+  var options = {
+           series: [{
+           name: 'เสียชีวิต',
+           data: total_deaths
+         },],
+           chart: {
+           height: 250,
+           type: 'area'
+         },
+        //  title: {
+        //   text: 'เสียชีวิต',
+        //   align: 'center',
+        //   offsetY: 20,
+        //   style: {
+        //          colors: '#000000',
+        //          fontSize: '15px',
+        //          fontFamily: 'Kanit, sans-serif',
+        //            }
+        // },
+         dataLabels: {
+           enabled: false
+         },
+         stroke: {
+           curve: 'smooth'
+         },
+         colors: ['#38ee7d'],
+         xaxis: {
+           type: 'datetime',
+           categories: total_date,
+           labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                 }
+               },
+         legend: {
+                     position: 'bottom',
+                     offsetY: 8,
+                     fontSize: '10px',
+                     fontFamily: 'Kanit, sans-serif',
+                     labels: {
+                           colors: '#000000',
+                           // useSeriesColors: false
+                             },
+                 },
+         yaxis: {
+           labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+         }
+         },
+         tooltip: {
+           x: {
+             format: 'dd/MM/yy'
+           },
+           y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          } 
+         },
+         };
+ 
+         var chart = new ApexCharts(document.querySelector("#chart-deaths"), options);
+         chart.render();
+</script>
+
+<script>
+ var options = {
+          series: [{
+          name: 'จำนวนผู้ติดเชื้อ',
+          data: human_val
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        // title: {
+        //   text: '10 อันดับจังหวัดที่มีผู้ติดเชื้อมากที่สุดในไทย',
+        //   align: 'center',
+        //   offsetY: 20,
+        //   style: {
+        //          colors: '#000000',
+        //          fontSize: '15px',
+        //          fontFamily: 'Kanit, sans-serif',
+        //            }
+        // },
+        colors: '#008FFB',
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            dataLabels: {
+                position: 'top'
+                    }
+            // columnWidth: '55%',
+            // endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          style: {
+            colors: ['#333'],
+            fontSize: '8px',
+            fontFamily: 'Kanit, sans-serif',
+              },
+          offsetX: 20
+        },
+        xaxis: {
+          categories: province_arr,
+          labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+         }
+        },
+        yaxis: {
+          labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-province"), options);
+        chart.render();
+</script>
+<script>
+  var options = {
+          series: [{
+          name: 'จำนวนผู้ติดเชื้อ',
+          data: nation_val
+        }],
+          chart: {
+          type: 'bar',
+          height: 350,
+        },
+        // title: {
+        //   text: '10 อันดับสัญชาติที่ติดเชื้อมากที่สุดในไทย',
+        //   align: 'center',
+        //   offsetY: 20,
+        //   style: {
+        //          colors: '#000000',
+        //          fontSize: '15px',
+        //          fontFamily: 'Kanit, sans-serif',
+        //            }
+        // },
+        colors: '#008FFB',
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            dataLabels: {
+                position: 'top'
+                    }
+            // columnWidth: '55%',
+            // endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled:  true,
+          style: {
+            colors: ['#333'],
+            fontSize: '8px',
+            fontFamily: 'Kanit, sans-serif',
+              },
+          offsetX: 20
+        },
+        xaxis: {
+          categories: nation_arr,
+          labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+         }
+        },
+        yaxis: {
+          labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                }
+        },
+        fill: {
+          opacity: 1,
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-nation"), options);
+        chart.render();
+</script>
+<script>
+ var options = {
+          series: Gender_val,
+          chart: {
+          height: 300,
+          type: 'radialBar',
+        },
+        plotOptions: {
+          radialBar: {
+            offsetY: 0,
+            startAngle: 0,
+            endAngle: 270,
+            hollow: {
+              margin: 5,
+              size: '30%',
+              background: 'transparent',
+              image: undefined,
+            },
+            dataLabels: {
+              name: {
+                show: false,
+              },
+              value: {
+                show: false,
+              }
+            }
+          }
+        },
+        colors: ['#1ab7ea', '#0084ff', '#39539E', '#0077B5'],
+        labels: Gender_key,
+        legend: {
+          show: true,
+          floating: true,
+          fontSize: '10px',
+          fontFamily: 'Kanit, sans-serif',
+          position: 'left',
+          offsetX: 50,
+          offsetY: -3,
+          labels: {
+            useSeriesColors: true,
+          },
+          markers: {
+            size: 0
+          },
+          formatter: function(seriesName, opts) {
+            return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+          },
+          itemMargin: {
+            vertical: 3
+          }
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            legend: {
+                show: true,
+                position: 'left',
+                offsetX: 1,
+                offsetY: -3,
+                fontSize: '10px',
+                fontFamily: 'Kanit, sans-serif'
+            }
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-gender"), options);
+        chart.render();
+</script>
+<script>
+   var options = {
+          series: [{
+            name: "ผู้ป่วยใหม่",
+            data: total_newconfirmed
+        },
+        {
+            name: "รักษาหายใหม่",
+            data: total_NewRecovered
+        }],
+          chart: {
+          height: 150,
+          type: 'line',
+          zoom: {
+            enabled: false
+          }
+        },
+        colors: ['#1ab7ea','#0077B5'],
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 2
+        },
+        legend: {
+          show: false,
+        },
+        // markers: {
+        //   size: [2]
+        // },
+        // title: {
+        //   text: 'Product Trends by Month',
+        //   align: 'left'
+        // },
+        // grid: {
+        //   row: {
+        //     colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        //     opacity: 0.5
+        //   },
+        // },
+        xaxis: {
+          categories: total_date,
+          type: 'datetime',
+          labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                }
+        },
+        yaxis: {
+          labels: {
+                 style: {
+                 colors: '#000000',
+                 fontSize: '10px',
+                 fontFamily: 'Kanit, sans-serif',
+                   }
+                }
+        },
+        tooltip: {
+           x: {
+             format: 'dd/MM/yy'
+           },
+           y: {
+            formatter: function (val) {
+              return val + " คน"
+            }
+          } 
+         }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-newconfirmed"), options);
+        chart.render();
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
