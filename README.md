@@ -1,4 +1,5 @@
 # COVID-19
 dashboard covid-19 <br>
 cr.kanthima <br>
-https://test-cicd-gitlab.web.app/
+![Alt text](https://github.com/pet1158888/COVID-19/blob/master/public/img.png "Optional title")
+
